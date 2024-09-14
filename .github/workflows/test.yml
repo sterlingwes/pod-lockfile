@@ -12,7 +12,6 @@ jobs:
         with:
           node-version: lts/*
           cache: "yarn"
-          cache-dependency-path: subdir/package-lock.json
       - run: yarn install --frozen-lockfile
       - run: yarn prepublishOnly
 
