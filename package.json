@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "prepublishOnly": "tsc",
-    "test": "./test/setup.sh && ./test/run.sh simple"
+    "test": "yarn prepublishOnly && ./test/setup.sh && ./test/lint-cli.sh && ./test/run.sh simple"
   },
   "devDependencies": {
     "@tsconfig/node-lts": "20.1.3",

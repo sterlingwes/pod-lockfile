@@ -13,6 +13,10 @@ log () {
   echo "$log_tag $1"
 }
 
+log "===================================================="
+log "Running lockfile snapshot tests for fixture $fixture"
+log "===================================================="
+
 log "Generating lockfile for test project in $working_dir"
 node ../../project/node_modules/.bin/pod-lockfile --pod-version "$pod_version"
 
@@ -27,3 +31,6 @@ if [[ $? -ne 0 ]]; then
 else
   log "Lockfiles are equal"
 fi
+
+log "Lockfile snapshot tests passed for fixture $fixture"
+echo ""

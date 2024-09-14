@@ -18,5 +18,8 @@ jobs:
       - name: setup test w/ local package install
         run: ./test/setup.sh
 
+      - name: lint CLI behaviours
+        run: ./test/lint-cli.sh
+
       - name: assert lockfile generated for simple project
         run: ./test/run.sh simple
