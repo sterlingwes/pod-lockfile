@@ -15,7 +15,7 @@ jobs:
 
       - name: Generate lockfile for simple project
         working-directory: test/fixtures/simple
-        run: bun run ../../../src/main.ts
+        run: bun run ../../../src/main.ts --pod-version 1.14.3
 
       - name: Assert result for simple project
         working-directory: test/fixtures/simple
