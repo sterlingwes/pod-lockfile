@@ -131,3 +131,4 @@ dist
 
 # tests
 test/fixtures/**/Podfile.lock
+test/project
