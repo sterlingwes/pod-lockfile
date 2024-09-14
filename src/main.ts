@@ -27,7 +27,7 @@ const podInstalled = installedGems.split(/\r?\n/).find((gem) => {
 if (
   podInstalled &&
   requiresPodVersion &&
-  podInstalled.includes(`(${podVersion.trim()})`) === false
+  podInstalled.includes(`(${podVersion.trim()}`) === false
 ) {
   throw new Error(
     `Pod version mismatch, expected ${podVersion}, got:\n\t${podInstalled}\n`

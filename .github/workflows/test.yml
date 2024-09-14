@@ -15,19 +15,5 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn prepublishOnly
 
-      - name: Generate lockfile for simple project
-        working-directory: test/fixtures/simple
-        run: node ../../../dist/main.js --pod-version 1.14.3
-
-      - name: Assert result for simple project
-        working-directory: test/fixtures/simple
-        run: |
-          set +e
-          cmp Podfile.lock.snapshot Podfile.lock
-          if [[ $? -ne 0 ]]; then
-            echo "Podfile.lock is not equal to Podfile.lock.snapshot"
-            diff -u Podfile.lock.snapshot Podfile.lock
-            exit 1
-          else
-            echo "Lockfiles are equal"
-          fi
+      - name: assert lockfile generated for simple project
+        run: ./test/run.sh simple
