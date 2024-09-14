@@ -12,10 +12,11 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
+      - run: bun run prepublishOnly
 
       - name: Generate lockfile for simple project
         working-directory: test/fixtures/simple
-        run: bun run ../../../src/main.ts --pod-version 1.14.3
+        run: node ../../../index.js --pod-version 1.14.3
 
       - name: Assert result for simple project
         working-directory: test/fixtures/simple
