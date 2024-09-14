@@ -1,7 +1,14 @@
 {
   "name": "pod-lockfile",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/main.js",
+  "keywords": [
+    "podfile",
+    "expo",
+    "ios",
+    "react-native",
+    "cocoapods"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sterlingwes/pod-lockfile.git"
