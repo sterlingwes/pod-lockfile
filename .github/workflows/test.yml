@@ -12,4 +12,11 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
-      - run: bun run src/main.ts
+
+      - name: Generate lockfile for simple project
+        working-directory: test/fixtures/simple
+        run: bun run ../../../src/main.ts
+
+      - name: Assert result for simple project
+        working-directory: test/fixtures/simple
+        run: cmp Podfile.lock.snapshot Podfile.lock

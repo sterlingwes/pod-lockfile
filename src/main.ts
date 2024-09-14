@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import { existsSync } from "fs";
 
 const installedGems = execSync("gem list --local").toString();
 
@@ -16,13 +17,15 @@ const pluginInstalled = installedGems.split(/\r?\n/).find((gem) => {
 });
 
 if (!pluginInstalled) {
-  console.log("Installing cocoapods-lockfile");
+  console.log("Installing cocoapods-lockfile plugin");
   execSync("gem install cocoapods-lockfile");
 }
 
-console.log("Generating lockfile for simple fixture");
-execSync("cd test/fixtures/simple && pod install --lockfile-only");
+const podfileExists = existsSync("Podfile");
+if (!podfileExists) {
+  console.log(`No Podfile could be found in ${process.cwd()}, aborting.`);
+  process.exit(1);
+}
 
-const lockfile = execSync("cat test/fixtures/simple/Podfile.lock").toString();
-console.log("got a lockfile!");
-console.log(lockfile);
+console.log("Generating lockfile for project");
+execSync("pod install --lockfile-only");
