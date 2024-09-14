@@ -1,6 +1,10 @@
 import { execSync } from "child_process";
 import { existsSync } from "fs";
 
+type SupportedFlags = {
+  "pod-version"?: string;
+};
+
 const flags = process.argv.reduce((acc, arg, index) => {
   const nextArg = process.argv[index + 1] ?? "";
   if (arg.startsWith("--") && nextArg.startsWith("--") === false) {
@@ -10,7 +14,7 @@ const flags = process.argv.reduce((acc, arg, index) => {
     };
   }
   return acc;
-}, {});
+}, {} as SupportedFlags);
 
 const podVersion = flags["pod-version"];
 const requiresPodVersion = typeof podVersion === "string";

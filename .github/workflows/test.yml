@@ -8,15 +8,17 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
         with:
-          bun-version: latest
-      - run: bun install
-      - run: bun run prepublishOnly
+          node-version: lts
+          cache: "yarn"
+          cache-dependency-path: subdir/package-lock.json
+      - run: yarn install --frozen-lockfile
+      - run: yarn prepublishOnly
 
       - name: Generate lockfile for simple project
         working-directory: test/fixtures/simple
-        run: node ../../../index.js --pod-version 1.14.3
+        run: node ../../../dist/main.js --pod-version 1.14.3
 
       - name: Assert result for simple project
         working-directory: test/fixtures/simple

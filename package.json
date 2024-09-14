@@ -1,14 +1,18 @@
 {
   "name": "pod-lockfile",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/main.js",
   "repository": "https://github.com/sterlingwes/pod-lockfile",
   "author": "Wes Johnson <wes@swj.io>",
   "license": "MIT",
   "files": [
-    "index.js"
+    "dist"
   ],
   "scripts": {
-    "prepublishOnly": "bun build src/main.ts --outfile=index.js --target node"
+    "prepublishOnly": "tsc"
+  },
+  "devDependencies": {
+    "@tsconfig/node-lts": "20.1.3",
+    "typescript": "^5"
   }
 }
