@@ -20,9 +20,12 @@ jobs:
       - name: Assert result for simple project
         working-directory: test/fixtures/simple
         run: |
+          set +e
           result=$(cmp Podfile.lock.snapshot Podfile.lock)
           if [ $result -ne 0 ]; then
             echo "Podfile.lock is not equal to Podfile.lock.snapshot"
             diff -u Podfile.lock.snapshot Podfile.lock
             exit 1
+          else
+            echo "Lockfiles are equal"
           fi
