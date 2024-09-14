@@ -1,20 +1,59 @@
 import { execSync } from "child_process";
 import { existsSync } from "fs";
 
+import manifest from "../package.json";
+
+const printHelp = () => {
+  console.log(`
+    Usage: pod-lockfile [options]
+  
+    Options:
+      --pod-version: The version of cocoapods to install or require, defaults to latest
+      --version: Print the version of the package
+    `);
+  process.exit(0);
+};
+
+if (process.argv.includes("--help") || process.argv.includes("-h")) {
+  printHelp();
+}
+
 type SupportedFlags = {
   "pod-version"?: string;
+  version?: boolean;
 };
+
+const knownFlags: Array<keyof SupportedFlags> = ["pod-version", "version"];
+const unsupportedFlags = new Set<string>();
 
 const flags = process.argv.reduce((acc, arg, index) => {
   const nextArg = process.argv[index + 1] ?? "";
   if (arg.startsWith("--") && nextArg.startsWith("--") === false) {
+    const key = arg.slice(2);
+    if (knownFlags.includes(key as any) === false) {
+      unsupportedFlags.add(key);
+      return acc;
+    }
     return {
       ...acc,
-      [arg.replace("--", "")]: nextArg || true,
+      [key]: nextArg || true,
     };
   }
   return acc;
 }, {} as SupportedFlags);
+
+if (unsupportedFlags.size > 0) {
+  console.log(
+    `Unsupported option(s): ${Array.from(unsupportedFlags).join(", ")}\n\n`
+  );
+  printHelp();
+  process.exit(1);
+}
+
+if (flags["version"]) {
+  console.log(manifest.version);
+  process.exit(0);
+}
 
 const podVersion = flags["pod-version"];
 const requiresPodVersion = typeof podVersion === "string";

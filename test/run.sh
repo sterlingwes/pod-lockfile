@@ -7,7 +7,7 @@ working_dir="test/fixtures/$fixture"
 cd $working_dir
 
 echo "Generating lockfile for test project in $working_dir"
-node ../../../dist/main.js --pod-version 1.14.3
+node ../.bin/pod-lockfile --pod-version 1.14.3
 
 set +e
 

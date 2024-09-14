@@ -14,6 +14,12 @@ jobs:
           cache: "yarn"
       - run: yarn install --frozen-lockfile
       - run: yarn prepublishOnly
+      - name: simulate package install for test projects
+        working-directory: test
+        run: |
+          yarn init -y
+          yarn add ../
+          yarn pod-lockfile -v
 
       - name: assert lockfile generated for simple project
         run: ./test/run.sh simple

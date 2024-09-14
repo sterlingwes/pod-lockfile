@@ -2,10 +2,17 @@
   "name": "pod-lockfile",
   "version": "1.0.0",
   "main": "dist/main.js",
-  "repository": "https://github.com/sterlingwes/pod-lockfile",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sterlingwes/pod-lockfile.git"
+  },
   "author": "Wes Johnson <wes@swj.io>",
   "license": "MIT",
+  "bin": {
+    "pod-lockfile": "bin/pod-lockfile"
+  },
   "files": [
+    "bin",
     "dist"
   ],
   "scripts": {
