@@ -3,6 +3,7 @@
 set -e
 
 log_tag="test/lint-cli.sh:"
+pod_version="1.14.3"
 cd test/project
 
 log () {
@@ -56,7 +57,7 @@ assert_help_prints() {
 
 assert_error_no_podfile() {
   set +e
-  result=$(yarn pod-lockfile --project ../fixtures)
+  result=$(yarn pod-lockfile --pod-version "$pod_version" --project ../fixtures)
   if [[ $? -eq 0 ]]; then
     log "Expected error when Podfile is not found"
     exit 1
