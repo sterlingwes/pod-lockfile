@@ -3,12 +3,13 @@ import { existsSync } from "fs";
 import { resolve } from "path";
 
 interface Options {
+  debug?: boolean;
   project?: string;
   podVersion?: string;
 }
 
 export const generateLockfile = (options?: Options) => {
-  const { project, podVersion } = options ?? {};
+  const { debug, project, podVersion } = options ?? {};
   const requiresPodVersion = typeof podVersion === "string";
 
   const installedGems = execSync("gem list --local").toString();
@@ -49,9 +50,20 @@ export const generateLockfile = (options?: Options) => {
     execSync("gem install cocoapods-lockfile");
   }
 
-  const path = resolve(project ?? process.cwd());
+  if (debug) {
+    const installedGems = execSync("gem list --local").toString();
+    console.log("Installed gems post-installs:");
+    console.log(installedGems);
+  }
 
-  const podfileExists = existsSync(resolve(path, "Podfile"));
+  const path = resolve(project ?? process.cwd());
+  const podfilePath = resolve(path, "Podfile");
+
+  if (debug) {
+    console.log(`Verifying podfile path exists at ${podfilePath}`);
+  }
+
+  const podfileExists = existsSync(podfilePath);
   if (!podfileExists) {
     console.log(`No Podfile could be found in ${path}, aborting.`);
     process.exit(1);
@@ -63,8 +75,14 @@ export const generateLockfile = (options?: Options) => {
     console.log(
       "\nPodfile.lock generated successfully! No dependencies were installed in the making of this lockfile.\n"
     );
-  } catch (e) {
+  } catch (e: any) {
     console.log(e);
+    if (debug && e.stdout) {
+      console.log(e.stdout.toString());
+    }
+    if (debug && e.stderr) {
+      console.log(e.stderr.toString());
+    }
     process.exit(1);
   }
 };

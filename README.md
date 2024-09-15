@@ -19,6 +19,7 @@ Options:
   --project: The path to the project directory holding a Podfile, defaults to current working directory
   --pod-version: The version of cocoapods to install or require, defaults to latest
   --version: Print the version of the package
+  --debug: Log more detailed output
 ```
 
 ### Programmatic API
