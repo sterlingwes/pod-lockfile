@@ -115,4 +115,12 @@ if (!podfileExists) {
 }
 
 console.log("Generating lockfile for project");
-execSync("pod install --lockfile-only");
+try {
+  execSync("pod install --lockfile-only", { cwd: path });
+  console.log(
+    "\nPodfile.lock generated successfully! No dependencies were installed in the making of this lockfile.\n"
+  );
+} catch (e) {
+  console.log(e);
+  process.exit(1);
+}
