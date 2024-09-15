@@ -18,7 +18,7 @@ log "Running lockfile snapshot tests for fixture $fixture"
 log "===================================================="
 
 log "Generating lockfile for test project in $working_dir"
-node ../../project/node_modules/.bin/pod-lockfile --pod-version "$pod_version"
+node ../../project/node_modules/.bin/pod-lockfile --debug --pod-version "$pod_version"
 
 set +e
 

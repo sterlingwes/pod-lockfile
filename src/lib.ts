@@ -12,6 +12,10 @@ export const generateLockfile = (options?: Options) => {
   const { debug, project, podVersion } = options ?? {};
   const requiresPodVersion = typeof podVersion === "string";
 
+  if (debug) {
+    console.log("Running with options:", JSON.stringify(options, null, 2));
+  }
+
   const installedGems = execSync("gem list --local").toString();
 
   const podInstalled = installedGems.split(/\r?\n/).find((gem) => {

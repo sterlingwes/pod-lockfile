@@ -47,7 +47,7 @@ const flags = process.argv.reduce((acc, arg, index) => {
       return acc;
     }
 
-    const nextArgIsValue = nextArg.startsWith("--") === false;
+    const nextArgIsValue = nextArg && nextArg.startsWith("--") === false;
 
     return {
       ...acc,
