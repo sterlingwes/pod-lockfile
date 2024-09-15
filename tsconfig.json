@@ -4,7 +4,8 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "target": "ES2022",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "declaration": true
   },
   "include": ["src/**/*"]
 }

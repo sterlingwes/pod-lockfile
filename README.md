@@ -8,13 +8,37 @@ You must have ruby and the RubyGem package manager (`gem`) installed wherever yo
 
 ## Usage
 
+### Command Line (yarn/npm bin)
+
 ```
+$ yarn pod-lockfile -h
+
 Usage: pod-lockfile [options]
 
 Options:
   --project: The path to the project directory holding a Podfile, defaults to current working directory
   --pod-version: The version of cocoapods to install or require, defaults to latest
   --version: Print the version of the package
+```
+
+### Programmatic API
+
+```ts
+import { generateLockfile } from "pod-lockfile";
+
+generateLockfile({ project: "./ios" });
+```
+
+Where `generateLockfile(options: Options)`:
+
+```ts
+interface Options {
+  // relative or absolute path to directory holding Podfile
+  project?: string;
+
+  // version of cocoapods you require (defaults to latest or whatever is already installed)
+  podVersion?: string;
+}
 ```
 
 ## What it does
