@@ -75,7 +75,13 @@ export const generateLockfile = (options?: Options) => {
 
   console.log("Generating lockfile for project");
   try {
-    execSync("pod install --lockfile-only", { cwd: path });
+    const installLog = execSync("pod install --lockfile-only", {
+      cwd: path,
+    }).toString();
+    if (debug) {
+      console.log(installLog);
+      console.log("");
+    }
     console.log(
       "\nPodfile.lock generated successfully! No dependencies were installed in the making of this lockfile.\n"
     );
