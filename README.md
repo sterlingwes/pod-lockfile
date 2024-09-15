@@ -12,6 +12,7 @@ You must have ruby and the RubyGem package manager (`gem`) installed wherever yo
 Usage: pod-lockfile [options]
 
 Options:
+  --project: The path to the project directory holding a Podfile, defaults to current working directory
   --pod-version: The version of cocoapods to install or require, defaults to latest
   --version: Print the version of the package
 ```

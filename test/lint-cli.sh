@@ -54,6 +54,19 @@ assert_help_prints() {
   fi
 }
 
+assert_error_no_podfile() {
+  set +e
+  result=$(yarn pod-lockfile --project ../fixtures)
+  if [[ $? -eq 0 ]]; then
+    log "Expected error when Podfile is not found"
+    exit 1
+  fi
+  if [[ $result != *"No Podfile could be found in"* ]]; then
+    log "Expected error message when Podfile is not found, instead received:\n$result"
+    exit 1
+  fi
+}
+
 log "Running CLI lint tests ==============================="
 log "You may see error outputs below, but they are expected"
 log "======================================================"
@@ -64,6 +77,8 @@ log "assert_unknown_option_fails"
 assert_unknown_option_fails
 log "assert_help_prints"
 assert_help_prints
+log "assert_error_no_podfile"
+assert_error_no_podfile
 
 log "CLI lint tests passed ================================"
 echo ""

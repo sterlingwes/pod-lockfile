@@ -1,5 +1,6 @@
 import { execSync } from "child_process";
 import { existsSync } from "fs";
+import { resolve } from "path";
 
 import manifest from "../package.json";
 
@@ -8,6 +9,7 @@ const printHelpAndExit = (exitCode = 0) => {
     Usage: pod-lockfile [options]
   
     Options:
+      --project: The path to the project directory holding a Podfile, defaults to current working directory
       --pod-version: The version of cocoapods to install or require, defaults to latest
       --version: Print the version of the package
     `);
@@ -19,11 +21,16 @@ if (process.argv.includes("--help") || process.argv.includes("-h")) {
 }
 
 type SupportedFlags = {
+  project?: string;
   "pod-version"?: string;
   version?: boolean;
 };
 
-const knownFlags: Array<keyof SupportedFlags> = ["pod-version", "version"];
+const knownFlags: Array<keyof SupportedFlags> = [
+  "project",
+  "pod-version",
+  "version",
+];
 const unsupportedFlags = new Set<string>();
 
 const flags = process.argv.reduce((acc, arg, index) => {
@@ -99,9 +106,11 @@ if (!pluginInstalled) {
   execSync("gem install cocoapods-lockfile");
 }
 
-const podfileExists = existsSync("Podfile");
+const path = resolve(flags["project"] ?? process.cwd());
+
+const podfileExists = existsSync(resolve(path, "Podfile"));
 if (!podfileExists) {
-  console.log(`No Podfile could be found in ${process.cwd()}, aborting.`);
+  console.log(`No Podfile could be found in ${path}, aborting.`);
   process.exit(1);
 }
 
